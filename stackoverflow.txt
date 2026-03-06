@@ -1,0 +1,303 @@
+ERROR: TypeError: 'NoneType' object is not subscriptable
+CAUSE: A variable is None and you are trying to index into it using [] or access an attribute.
+FIX: Always check if the variable is None before accessing it.
+EXAMPLE:
+  # Bad
+  result = get_data()
+  print(result[0])  # crashes if get_data() returns None
+
+  # Good
+  result = get_data()
+  if result is not None:
+      print(result[0])
+SOURCE: stackoverflow.com/questions/6158673
+
+---
+
+ERROR: KeyError: key not found in dictionary
+CAUSE: You are accessing a dictionary key that does not exist.
+FIX: Use dict.get('key', default_value) instead of dict['key'] to avoid crash.
+EXAMPLE:
+  # Bad
+  data = {'name': 'Alice'}
+  print(data['age'])  # KeyError
+
+  # Good
+  print(data.get('age', 'Not found'))
+SOURCE: stackoverflow.com/questions/11277432
+
+---
+
+ERROR: IndexError: list index out of range
+CAUSE: You are accessing an index that is beyond the length of the list.
+FIX: Always check len(list) before accessing by index, or use try/except.
+EXAMPLE:
+  # Bad
+  items = [1, 2, 3]
+  print(items[5])  # IndexError
+
+  # Good
+  if len(items) > 5:
+      print(items[5])
+SOURCE: stackoverflow.com/questions/1098643
+
+---
+
+ERROR: AttributeError: object has no attribute
+CAUSE: You are calling a method or attribute that does not exist on the object.
+FIX: Use hasattr(obj, 'attribute') to check before accessing, or check the object type.
+EXAMPLE:
+  # Bad
+  x = 5
+  x.append(1)  # int has no append
+
+  # Good
+  if hasattr(x, 'append'):
+      x.append(1)
+SOURCE: stackoverflow.com/questions/9058983
+
+---
+
+ERROR: ImportError: No module named 'module_name'
+CAUSE: The package is not installed or there is a circular import issue.
+FIX: Install the missing package using pip. Check for circular imports if it exists.
+EXAMPLE:
+  pip install module_name
+
+  # Or if circular import, restructure imports inside functions:
+  def my_func():
+      import module_name
+      module_name.do_something()
+SOURCE: stackoverflow.com/questions/17001010
+
+---
+
+ERROR: RecursionError: maximum recursion depth exceeded
+CAUSE: A recursive function has no proper base case or calls itself infinitely.
+FIX: Add a base case to stop recursion, or increase recursion limit with sys.setrecursionlimit().
+EXAMPLE:
+  # Bad
+  def factorial(n):
+      return n * factorial(n - 1)  # no base case
+
+  # Good
+  def factorial(n):
+      if n == 0:
+          return 1
+      return n * factorial(n - 1)
+SOURCE: stackoverflow.com/questions/6809402
+
+---
+
+ERROR: ValueError: too many values to unpack
+CAUSE: The right side of an assignment has more values than variables on the left.
+FIX: Match the number of variables to values, or use * to capture extras.
+EXAMPLE:
+  # Bad
+  a, b = [1, 2, 3]  # ValueError
+
+  # Good
+  a, b, *rest = [1, 2, 3]
+  # or
+  a, b = [1, 2, 3][:2]
+SOURCE: stackoverflow.com/questions/1479776
+
+---
+
+ERROR: FileNotFoundError: No such file or directory
+CAUSE: The file path is wrong, the file doesn't exist, or working directory is different.
+FIX: Use os.path.exists() to check, use absolute paths, or use pathlib.
+EXAMPLE:
+  import os
+  from pathlib import Path
+
+  # Check before opening
+  path = Path("data/file.txt")
+  if path.exists():
+      with open(path) as f:
+          content = f.read()
+  else:
+      print(f"File not found: {path.resolve()}")
+SOURCE: stackoverflow.com/questions/36077266
+
+---
+
+ERROR: ZeroDivisionError: division by zero
+CAUSE: Dividing a number by zero either directly or through a variable holding 0.
+FIX: Check if denominator is zero before dividing.
+EXAMPLE:
+  # Bad
+  result = 100 / x  # crashes if x is 0
+
+  # Good
+  if x != 0:
+      result = 100 / x
+  else:
+      result = 0
+SOURCE: stackoverflow.com/questions/1308574
+
+---
+
+ERROR: NameError: name 'variable' is not defined
+CAUSE: Using a variable before assigning it, or a typo in the variable name.
+FIX: Ensure variable is defined before use. Check scope — it might be defined inside a function.
+EXAMPLE:
+  # Bad
+  print(total)  # NameError if total not defined yet
+
+  # Good
+  total = 0
+  print(total)
+SOURCE: stackoverflow.com/questions/6039605
+
+---
+
+ERROR: TypeError: unsupported operand type(s) for +: 'int' and 'str'
+CAUSE: Trying to add or concatenate incompatible types like int and string.
+FIX: Convert types explicitly before the operation.
+EXAMPLE:
+  # Bad
+  age = 25
+  print("Age: " + age)  # TypeError
+
+  # Good
+  print("Age: " + str(age))
+  # or
+  print(f"Age: {age}")
+SOURCE: stackoverflow.com/questions/2376464
+
+---
+
+ERROR: PermissionError: [Errno 13] Permission denied
+CAUSE: The script does not have permission to read/write to the file or directory.
+FIX: Check file permissions, run with appropriate privileges, or change file ownership.
+EXAMPLE:
+  import os
+  import stat
+
+  # Give read/write permission to owner
+  os.chmod("file.txt", stat.S_IRUSR | stat.S_IWUSR)
+SOURCE: stackoverflow.com/questions/2953168
+
+---
+
+ERROR: StopIteration raised inside generator
+CAUSE: PEP 479: raising StopIteration inside a generator now causes RuntimeError.
+FIX: Use return instead of raising StopIteration inside a generator.
+EXAMPLE:
+  # Bad
+  def my_gen():
+      raise StopIteration  # RuntimeError in Python 3.7+
+
+  # Good
+  def my_gen():
+      return
+SOURCE: stackoverflow.com/questions/51700960
+
+---
+
+ERROR: UnicodeDecodeError: codec can't decode byte
+CAUSE: Trying to read a file with the wrong encoding (e.g., file is UTF-8 but opened as ASCII).
+FIX: Specify encoding explicitly when opening files.
+EXAMPLE:
+  # Bad
+  with open("file.txt") as f:
+      content = f.read()
+
+  # Good
+  with open("file.txt", encoding="utf-8", errors="ignore") as f:
+      content = f.read()
+SOURCE: stackoverflow.com/questions/9233027
+
+---
+
+ERROR: MemoryError: unable to allocate memory
+CAUSE: Loading too much data into memory at once (large files, huge lists).
+FIX: Use generators, chunked reading, or streaming instead of loading all at once.
+EXAMPLE:
+  # Bad
+  data = open("huge_file.txt").readlines()  # loads all into memory
+
+  # Good — process line by line
+  with open("huge_file.txt") as f:
+      for line in f:
+          process(line)
+SOURCE: stackoverflow.com/questions/1904394
+
+---
+
+ERROR: ConnectionError: Failed to establish a new connection
+CAUSE: Network is unavailable, wrong URL, or server is down.
+FIX: Wrap requests in try/except, add retries, and validate the URL.
+EXAMPLE:
+  import requests
+  from requests.adapters import HTTPAdapter
+
+  session = requests.Session()
+  session.mount("https://", HTTPAdapter(max_retries=3))
+
+  try:
+      response = session.get("https://api.example.com", timeout=5)
+  except requests.exceptions.ConnectionError as e:
+      print(f"Connection failed: {e}")
+SOURCE: stackoverflow.com/questions/23013220
+
+---
+
+ERROR: TimeoutError: timed out waiting for response
+CAUSE: A network request or operation took longer than the allowed timeout.
+FIX: Increase timeout or add proper timeout handling with retries.
+EXAMPLE:
+  import requests
+
+  try:
+      response = requests.get("https://api.example.com", timeout=10)
+  except requests.exceptions.Timeout:
+      print("Request timed out. Try again later.")
+SOURCE: stackoverflow.com/questions/21965485
+
+---
+
+ERROR: AssertionError raised unexpectedly
+CAUSE: An assert statement failed — condition evaluated to False.
+FIX: Debug the condition being asserted, or catch AssertionError in tests.
+EXAMPLE:
+  # Bad
+  assert len(results) > 0  # crashes silently if empty
+
+  # Good
+  if len(results) == 0:
+      raise ValueError("Results list is empty — check your query or data source.")
+SOURCE: stackoverflow.com/questions/5142418
+
+---
+
+ERROR: RuntimeError: dictionary changed size during iteration
+CAUSE: Adding or removing keys from a dictionary while iterating over it.
+FIX: Iterate over a copy of the dictionary.
+EXAMPLE:
+  # Bad
+  for key in my_dict:
+      if condition:
+          del my_dict[key]  # RuntimeError
+
+  # Good
+  for key in list(my_dict.keys()):
+      if condition:
+          del my_dict[key]
+SOURCE: stackoverflow.com/questions/11941817
+
+---
+
+ERROR: OverflowError: math range error or integer too large
+CAUSE: A numeric computation produced a value too large for the data type.
+FIX: Use Python's decimal module for large floats, or handle with try/except.
+EXAMPLE:
+  import math
+  from decimal import Decimal
+
+  try:
+      result = math.exp(1000)  # OverflowError
+  except OverflowError:
+      result = Decimal(1000).exp()  # handles large numbers
+SOURCE: stackoverflow.com/questions/3477283
