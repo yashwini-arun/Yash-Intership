@@ -1,0 +1,7 @@
+streamlit==1.42.0
+groq==0.13.1
+requests==2.32.3
+python-dotenv==1.0.1
+langdetect==1.0.9
+wikipedia-api==0.7.1
+arxiv==2.1.3
