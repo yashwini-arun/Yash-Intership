@@ -1,6 +1,6 @@
 # MCP Server 
 
-A feature-rich, fully free MCP (Model Context Protocol) server built with Python and FastMCP. Packed with **12 tools** across 6 categories — works with **Cline**, **Continue**.
+A feature-rich, fully free MCP (Model Context Protocol) server built with Python and FastMCP. Packed with **12 tools**  — works with **Cline**, **Continue**.
 
 ---
 
