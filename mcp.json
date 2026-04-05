@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "my-mcp-server": {
+      "command": "python",
+      "args": ["C:/Users/YASHWINI ARUN/Desktop/mcp_server/server.py"],
+      "disabled": false
+    }
+  }
+}
